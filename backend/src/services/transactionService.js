@@ -31,10 +31,10 @@ const getAllTransactionByEnvelope = async (id) => {
 
 const create_transaction = async (data) => {
 
-    const { id, budget } = data;
+    const { title, budget } = data;
 
 
-    const envelope = await envelopeService.getEnvelopeById(id);
+    const envelope = await envelopeService.getEnvelopeBytitle(title);
 
     if (budget == null) {
         throw new Error('budget is required');

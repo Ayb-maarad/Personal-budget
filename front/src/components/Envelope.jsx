@@ -1,77 +1,81 @@
-
 import { useState, useEffect } from "react";
-import { get_envelopes, get_envelope, post_envelope } from "../services/envelopeService";
-
+import { get_envelopes } from "../services/envelopeService";
 import { post_transaction } from "../services/transactionService";
 
 const Envelope = () => {
+  const [title, setTitle] = useState("");
+  const [budget, setBudget] = useState("");
+  const [envelopes, setEnvelopes] = useState([]);
 
-    const [title, setTitle] = useState('');
-    const [budget, setBudget] = useState(0);
-    const [Envelopes, setEnvelopes] = useState([]);
-
-    //getting envlopes 
-    const fetch_envelopes = async () => {
-        try {
-            const envelopes = await get_envelopes();
-
-            setEnvelopes(envelopes);
-
-        } catch (error) {
-            console.log(error);
-        }
+  const fetch_envelopes = async () => {
+    try {
+      const data = await get_envelopes();
+      setEnvelopes(data);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    //posting transaction 
+  const handleTransaction = async () => {
+    try {
+      const response = await post_transaction({
+        title,
+        budget: Number(budget),
+      });
 
-    const HandleTransaction = async ()=>{
-        try {
-            const response = await post_transaction({ title , budget})
-            
-        } catch (error) {
-             console.log(error);
-        }
+      console.log(response);
 
+      setBudget("");
+      setTitle("");
+      fetch_envelopes();
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleTransaction();
+  };
 
+  useEffect(() => {
+    fetch_envelopes();
+  }, []);
 
-        
-    }
+  return (
+    <>
+      <ul>
+        {[...envelopes]
+        .sort((a,b) => b.budget - a.budget)
+        .map((envelope) => (
+          <li key={envelope.id}>
+            {envelope.title}
+            <div>{envelope.budget}</div>
+          </li>
+        ))}
+      </ul>
 
-    useEffect(() => {
-        fetch_envelopes();
-    }, []);
+      <form onSubmit={handleSubmit}>
+        <select value={title} onChange={(e) => setTitle(e.target.value)}>
+          <option value="">-- choose an envelope --</option>
+          {envelopes.map((envelope) => (
+            <option key={envelope.id} value={envelope.title}>
+              {envelope.title}
+            </option>
+          ))}
+        </select>
 
+        <input
+          type="number"
+          placeholder="Amount"
+          value={budget}
+          onChange={(e) => setBudget(e.target.value)}
+        />
 
-    return (
-        <>
-            <ul>
-                {Envelopes.map((Envelope) => {
-                    return (<li key={Envelope.id}> {Envelope.title}  <div>{Envelope.budget}</div></li>);
-
-                })}
-            </ul>
-
-            <div>
-                <form  onSubmit={handleSubmit}>
-                    <select>
-                        {Envelopes.map((Envelope)=>{
-                            return (<option value={Envelope.title}>{Envelope.title}</option>)
-                        })}
-                    </select>
-                    <input type="number" placeholder="Amount" value={budget} onChange={(e)=>{setBudget(e.target.value)}}/>
-                    <button type="submit">Buy</button>
-                </form>
-
-
-            </div>
-
-
-        </>
-    );
-}
+        <button type="submit">Buy</button>
+      </form>
+    </>
+  );
+};
 
 export default Envelope;

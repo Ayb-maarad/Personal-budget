@@ -12,6 +12,12 @@ const getEnvelopeById = async (id) => {
   return envelope;
 };
 
+const getEnvelopeBytitle = async (title) =>{
+
+  const envelope = await Envelope.findOne({where: { title }})
+  return envelope;
+}
+
 
 const createEnvelope = async (envelopeData) => {
   const { title, budget } = envelopeData;
@@ -66,6 +72,7 @@ const getTotalBudget = async () => {
 module.exports = {
   getAllEnvelopes,
   getEnvelopeById,
+  getEnvelopeBytitle,
   createEnvelope,
   updateEnvelope,
   deleteEnvelope,

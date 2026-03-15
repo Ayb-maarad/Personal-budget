@@ -62,7 +62,7 @@ try {
 exports.create_transaction = async (req,res) =>{
 
     try {   
-        const data = req.body.transaction;
+        const data = req.body;
        
         const {transaction, updated_envelope} = await transactionService.create_transaction(data);
 
