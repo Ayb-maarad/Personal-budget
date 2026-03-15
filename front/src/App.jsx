@@ -1,14 +1,14 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import HomePage from './pages/homepage';
+import HomePage from './pages/EnvelopePage';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/envelopes" element={<HomePage />} />
+        <Route path="/" element={<EnvelopePage />} />
+        <Route path="/envelopes" element={<EnvelopePage />} />
       </Routes>
     </div>
   );
