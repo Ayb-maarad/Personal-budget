@@ -29,7 +29,7 @@ exports.get_envelope = async (req, res) => {
 };
 
 // Create envelope
-exports.create_envelope = async (req, res, next) => {
+exports.create_envelope = async (req, res) => {
   try {
     const { title, budget } = req.body;
     const envelope = await envelopeService.createEnvelope({ title, budget });
@@ -45,7 +45,7 @@ exports.create_envelope = async (req, res, next) => {
 };
 
 // Update envelope
-exports.update_envelope = async (req, res, next) => {
+exports.update_envelope = async (req, res) => {
   try {
     const id = req.params.id;
     const { title, budget } = req.body;
