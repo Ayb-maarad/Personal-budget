@@ -1,8 +1,7 @@
 
-import { useState } from "react";
 import Envelope from "../components/Envelope";
 
-const HomePage = () => {
+const EnvelopePage = () => {
 
 
 
@@ -14,4 +13,4 @@ const HomePage = () => {
     );
 }
 
-export default HomePage;
+export default EnvelopePage;
