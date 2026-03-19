@@ -5,15 +5,24 @@ import CreateEnvelopeForm from "./CreateEnvelopeForm";
 import EnvelopeItem from "./EnvelopeItem";
 import TransactionForm from "./TransactionForm";
 
+
+type EnvelopeType = {
+
+  id : number;
+  title : string;
+  budget : number;
+}
+
 const Envelope = () => {
    
   
-    const [envelopes, setEnvelopes] = useState([]);
+    const [envelopes, setEnvelopes] = useState<EnvelopeType[]>([]);
 
 
-      const fetch_envelopes = async () => {
+      const fetch_envelopes = async (): Promise<void> => {
+
                 try {
-                    const data = await get_envelopes();
+                    const data : EnvelopeType[] = await get_envelopes();
                     setEnvelopes(data);
                 } catch (error) {
                     console.log(error);
@@ -46,9 +55,6 @@ const Envelope = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <section className="lg:col-span-2">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
-              Envelopes
-            </h2>
 
             <EnvelopeItem
               envelopes={envelopes}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { post_transaction } from "../services/transactionService";
 
-const TransactionForm = ({envelopes}) => {
+const TransactionForm = ({envelopes, onSuccess}) => {
 
     const [TransactionTitle, setTransactionTitle] = useState("");
     const [TransactionBudget, setTransactionBudget] = useState("");
@@ -18,7 +18,7 @@ const TransactionForm = ({envelopes}) => {
             console.log(response);
             setTransactionBudget("");
 
-            fetch_envelopes();
+            onSuccess();
         } catch (error) {
             console.log(error);
         }
