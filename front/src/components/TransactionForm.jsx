@@ -27,16 +27,20 @@ const TransactionForm = ({envelopes}) => {
 
 
     const handleTransactionSubmit = (e) => {
-        e.preventDefault();
+      
         handleTransaction();
     };
 
 
     return (
-        <>
-            <p>Do a transaction : </p>
-            <form onSubmit={handleTransactionSubmit}>
-                <select value={TransactionTitle} onChange={(e) => setTransactionTitle(e.target.value)}>
+        <div className="max-w-xl mx-auto mb-8 bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-300 mb-4">Do a Transaction</h2>
+            <form onSubmit={handleTransactionSubmit} className="flex flex-col gap-3">
+                <select
+                    value={TransactionTitle}
+                    onChange={(e) => setTransactionTitle(e.target.value)}
+                    className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500"
+                >
                     <option value="">-- choose an envelope --</option>
                     {envelopes.map((envelope) => (
                         <option key={envelope.id} value={envelope.title}>
@@ -50,11 +54,14 @@ const TransactionForm = ({envelopes}) => {
                     placeholder="Amount"
                     value={TransactionBudget}
                     onChange={(e) => setTransactionBudget(e.target.value)}
+                    className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
                 />
 
-                <button type="submit">Buy</button>
+                <button type="submit" className="bg-indigo-600 hover:bg-indigo-500 transition-colors text-white font-semibold rounded-lg py-2">
+                    Buy
+                </button>
             </form>
-        </>
+        </div>
     );
 
 }

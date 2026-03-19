@@ -20,11 +20,15 @@ const Envelope = () => {
                 }
             };
 
+
+       
+
             
     useEffect(() => {
         fetch_envelopes();
     }, []);
    
+
 
 
   
@@ -33,16 +37,43 @@ const Envelope = () => {
 
 
 
-    return (
-        <>
+      return (
+    <div className="min-h-screen bg-gray-100 px-4 py-10">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-center text-3xl font-bold text-gray-700 mb-10">
+          Envelope Manager
+        </h1>
 
-            <EnvelopeItem envelopes = {envelopes} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          <section className="lg:col-span-2">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              Envelopes
+            </h2>
+
+            <EnvelopeItem
+              envelopes={envelopes}
+              setEnvelopes={setEnvelopes}
+              
+            />
+          </section>
+
+          <div className="space-y-1">
+            <section>
+              <TransactionForm
+                envelopes={envelopes}
+                onSuccess={fetch_envelopes}
+              />
+            </section>
+
+            <section>
+              <CreateEnvelopeForm onSuccess={fetch_envelopes} />
+            </section>
             
-           <TransactionForm envelopes={envelopes}/>
-
-            <CreateEnvelopeForm onSuccess= {fetch_envelopes}/>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Envelope;

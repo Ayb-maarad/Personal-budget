@@ -36,7 +36,7 @@ exports.create_envelope = async (req, res) => {
     res.status(201).json({ envelope });
   } catch (error) {
     // Business logic errors (validation)
-    if (error.message.includes('required') || error.message.includes('positive')) {
+    if (error.message.includes('required') || error.message.includes('positive') || error.message.includes('exists')) {
       return res.status(400).json({ error: error.message });
     }
     res.status(500).json({ error: error.message });
@@ -68,7 +68,7 @@ exports.update_envelope = async (req, res) => {
 };
 
 // Delete envelope
-exports.delete_envelope = async (req, res, next) => {
+exports.delete_envelope = async (req, res) => {
   try {
     const id = req.params.id;
     const deleted = await envelopeService.deleteEnvelope(id);

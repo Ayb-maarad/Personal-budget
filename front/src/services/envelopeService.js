@@ -1,4 +1,5 @@
 import axios from "axios"
+import { data } from "react-router-dom";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -29,6 +30,19 @@ export const post_envelope = async (data)=>{
        
         return res.data;
   
+}
+
+export const delete_envelope = async (id) => {
+
+        const res = await api.delete(`/envelopes/${id}`);
+        return res.data;
+        
+}
+
+export const update_envelope = async (id,data) => {
+
+        const res = await api.put(`/envelopes/${id}`, data)
+        return res.data;
 }
 
 export default api;

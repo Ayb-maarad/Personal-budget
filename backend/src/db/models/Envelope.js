@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+      set(value) {
+        this.setDataValue("title", value.trim().toLowerCase());
+      }
+
     },
     budget: {
       type: DataTypes.INTEGER,

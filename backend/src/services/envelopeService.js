@@ -23,15 +23,22 @@ const createEnvelope = async (envelopeData) => {
   const { title, budget } = envelopeData;
   
   // Business logic validation
-  if (!title || !budget) {
+  if (!title || budget === null) {
     throw new Error('Title and budget are required');
   }
 
   if (budget < 0) {
     throw new Error('Budget must be a positive number');
   }
+  const existing = await getEnvelopeBytitle(title);
 
-  const envelope = await Envelope.create({ title, budget });
+  let envelope =  {};
+  if(!existing){
+   envelope = await Envelope.create({ title, budget });
+  }
+  else{
+    throw new Error('envelope already exists');
+  }
   return envelope;
 };
 
