@@ -4,13 +4,26 @@ import { delete_envelope, update_envelope } from "../services/envelopeService";
 import UpdateEnvelopeForm from "./UpdateEnvelopeFrom";
 import Modal from "./Modal";
 
+type EnvelopeType = {
 
-const EnvelopeItem = ({ envelopes, setEnvelopes }) => {
+  id : number;
+  title : string;
+  budget : number;
+}
 
-    const [showform, setshowform] = useState(false);
-    const [selectedenvelope, setselectedenvelope] = useState(null);
+type EnvelopeItempprops = {
 
-    const handleDeleteEnvelope = async (id) => {
+    envelopes : EnvelopeType[];
+    setEnvelopes : (value: EnvelopeType[] | ((prev: EnvelopeType[]) => EnvelopeType[])) => void;
+;
+}
+
+const EnvelopeItem = ({ envelopes, setEnvelopes } : EnvelopeItempprops) => {
+
+    const [showform, setshowform] = useState<boolean>(false);
+    const [selectedenvelope, setselectedenvelope] = useState<EnvelopeType| null>(null);
+
+    const handleDeleteEnvelope = async (id : number) => {
 
         try {
             const data = await delete_envelope(id);
@@ -26,14 +39,14 @@ const EnvelopeItem = ({ envelopes, setEnvelopes }) => {
 
 
 
-    const ShowUpdateForm = (envelope) => {
+    const ShowUpdateForm = (envelope : EnvelopeType) : void => {
         setselectedenvelope(envelope);
         setshowform(true);
 
     }
 
-    const closeUpdateFrom = () => {
-        setselectedenvelope("");
+    const closeUpdateFrom = () : void => {
+        setselectedenvelope(null);
         setshowform(false);
     }
 

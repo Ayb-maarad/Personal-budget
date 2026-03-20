@@ -2,15 +2,29 @@
 
 import { update_envelope } from "../services/envelopeService";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
-const UpdateEnvelopeForm = ({envelope, onClose})=>{
+type EnvelopeType = {
 
-      const [EnvelopeTitle, setEnvelopeTitle] = useState(envelope.title);
-      const [EnvelopeBudget, setEnvelopeBudget] = useState(envelope.budget);
+  id : number;
+  title : string;
+  budget : number;
+}
 
 
-    const handleUpdateEnvelope = async (e) => {
+type UpdateEnvelopeFormprops = {
+
+    envelope : EnvelopeType;
+    onClose : ()=> void
+}
+
+const UpdateEnvelopeForm = ({envelope, onClose}: UpdateEnvelopeFormprops)=>{
+
+      const [EnvelopeTitle, setEnvelopeTitle] = useState<string>(envelope.title);
+      const [EnvelopeBudget, setEnvelopeBudget] = useState<number>(envelope.budget);
+
+
+    const handleUpdateEnvelope = async (e : React.FormEvent<HTMLFormElement>) : Promise<void> => {
                 
                    
             
@@ -48,7 +62,7 @@ const UpdateEnvelopeForm = ({envelope, onClose})=>{
                 <label className="text-sm text-gray-400">Budget</label>
                 <input
                     value={EnvelopeBudget}
-                    onChange={(e) => setEnvelopeBudget(e.target.value)}
+                    onChange={(e) => setEnvelopeBudget(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none focus:border-indigo-500 transition-colors"
                     placeholder="Budget amount"
                     type="number"

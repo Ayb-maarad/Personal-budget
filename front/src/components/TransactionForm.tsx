@@ -1,14 +1,27 @@
 
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { post_transaction } from "../services/transactionService";
 
-const TransactionForm = ({envelopes, onSuccess}) => {
+type EnvelopeType = {
 
-    const [TransactionTitle, setTransactionTitle] = useState("");
-    const [TransactionBudget, setTransactionBudget] = useState("");
+  id : number;
+  title : string;
+  budget : number;
+}
 
-    const handleTransaction = async () => {
+type TransactionFormProps = {
+  envelopes: EnvelopeType[];
+  onSuccess: () => void | Promise<void>;
+};
+
+
+const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
+
+    const [TransactionTitle, setTransactionTitle] = useState<string>("");
+    const [TransactionBudget, setTransactionBudget] = useState<string>("");
+
+    const handleTransaction = async (): Promise<void> => {
         try {
             const response = await post_transaction({
                 title: TransactionTitle,
@@ -26,9 +39,9 @@ const TransactionForm = ({envelopes, onSuccess}) => {
 
 
 
-    const handleTransactionSubmit = (e) => {
-      
-        handleTransaction();
+    const handleTransactionSubmit = async (): Promise<void> => {
+     
+        await handleTransaction();
     };
 
 

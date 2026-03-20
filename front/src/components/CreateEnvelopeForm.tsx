@@ -3,13 +3,18 @@
 import { useState } from "react";
 import { post_envelope } from "../services/envelopeService";
 
-const CreateEnvelopeForm = ({onSuccess}) => {
 
-    const [EnvelopeTitle, setEnvelopeTitle] = useState("");
-    const [EnvelopeBudget, setEnvelopeBudget] = useState("");
-    const [Err , setErr] = useState("");
+type CreateEnvelopeFormprops = {
+    onSuccess : ()=> void;
+}
 
-    const handleEnvelope = async () => {
+const CreateEnvelopeForm = ({onSuccess}: CreateEnvelopeFormprops) => {
+
+    const [EnvelopeTitle, setEnvelopeTitle] = useState<string>("");
+    const [EnvelopeBudget, setEnvelopeBudget] = useState<number>(0);
+    const [Err , setErr] = useState<string>("");
+
+    const handleEnvelope = async () : Promise<void> => {
 
         try {
             setErr("");
@@ -20,12 +25,12 @@ const CreateEnvelopeForm = ({onSuccess}) => {
             onSuccess?.();
             console.log(response);
 
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
             setErr(error.message);
 
             setTimeout(()=>{
-                setErr("");
+                setErr(""); 
             },3000);
         }
     }
@@ -34,9 +39,9 @@ const CreateEnvelopeForm = ({onSuccess}) => {
 
 
 
-    const handleEnvelopeSubmit = (e) => {
+    const handleEnvelopeSubmit = async (e : React.FormEvent<HTMLFormElement>) : Promise<void> => {
         e.preventDefault();
-        handleEnvelope();
+       await handleEnvelope();
     }
 
 
@@ -59,7 +64,7 @@ const CreateEnvelopeForm = ({onSuccess}) => {
                     type="number"
                     placeholder="Amount"
                     value={EnvelopeBudget}
-                    onChange={(e) => setEnvelopeBudget(e.target.value)}
+                    onChange={(e) => setEnvelopeBudget(Number(e.target.value))}
                     className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500"
                 />
                 <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 transition-colors text-white font-semibold rounded-lg py-2">
