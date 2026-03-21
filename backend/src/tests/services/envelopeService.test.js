@@ -105,4 +105,38 @@ describe("envelopeService", () => {
       });
     });
   });
+
+ describe("getAllEnvelopes", () => {
+  test("returns all envelopes", async () => {
+    Envelope.findAll.mockResolvedValue([
+      {
+        id: 1,
+        title: "food",
+        budget: 400,
+      },
+      {
+        id: 2,
+        title: "transport",
+        budget: 500,
+      },
+    ]);
+
+    const result = await envelopeService.getAllEnvelopes();
+
+    expect(Envelope.findAll).toHaveBeenCalledTimes(1);
+    expect(result).toEqual([
+      {
+        id: 1,
+        title: "food",
+        budget: 400,
+      },
+      {
+        id: 2,
+        title: "transport",
+        budget: 500,
+      },
+    ]);
+  });
+});
+
 });

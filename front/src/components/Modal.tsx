@@ -8,19 +8,21 @@ type ModalProps = {
 const Modal = ({ onClose, children }: ModalProps) => {
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-xl border border-gray-700"
+        className="bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-gray-600 ring-1 ring-indigo-500/20"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
-        <button
-          className="mb-4 text-gray-400 hover:text-white text-sm"
-          onClick={onClose}
-        >
-          ✕ Close
-        </button>
+        <div className="flex justify-end mb-4">
+          <button
+            className="text-gray-500 hover:text-white hover:bg-gray-700 rounded-lg p-1.5 transition-colors text-sm"
+            onClick={onClose}
+          >
+            ✕
+          </button>
+        </div>
         {children}
       </div>
     </div>

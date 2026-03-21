@@ -47,12 +47,12 @@ const Envelope = () => {
 
 
       return (
-    <div className="min-h-screen bg-gray-100 px-4 py-10">
+    <div className="min-h-screen bg-gray-900 px-4 py-10">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-center text-3xl font-bold text-gray-700 mb-10">
+        <h1 className="text-center text-4xl font-extrabold text-white mb-2 tracking-tight">
           Envelope Manager
         </h1>
-
+        <p className="text-center text-gray-500 mb-10 text-sm tracking-widest uppercase">Manage your budget with envelopes</p>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <section className="lg:col-span-2">
 

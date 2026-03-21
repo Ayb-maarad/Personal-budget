@@ -46,13 +46,13 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
 
 
     return (
-        <div className="max-w-xl mx-auto mb-8 bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700">
-            <h2 className="text-lg font-semibold text-gray-300 mb-4">Do a Transaction</h2>
+        <div className="max-w-xl mx-auto mb-8 bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700 ring-1 ring-indigo-500/10">
+            <h2 className="text-base font-bold text-indigo-400 uppercase tracking-widest mb-4 border-b border-gray-700 pb-2">New Transaction</h2>
             <form onSubmit={handleTransactionSubmit} className="flex flex-col gap-3">
                 <select
                     value={TransactionTitle}
                     onChange={(e) => setTransactionTitle(e.target.value)}
-                    className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500"
+                    className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition-colors cursor-pointer"
                 >
                     <option value="">-- choose an envelope --</option>
                     {envelopes.map((envelope) => (
@@ -70,7 +70,7 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
                     className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
                 />
 
-                <button type="submit" className="bg-indigo-600 hover:bg-indigo-500 transition-colors text-white font-semibold rounded-lg py-2">
+                <button type="submit" className="bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all text-white font-semibold rounded-lg py-2 shadow-md shadow-indigo-900/30">
                     Buy
                 </button>
             </form>

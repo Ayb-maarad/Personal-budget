@@ -5,7 +5,7 @@ import EnvelopePage from './pages/EnvelopePage';
 
 function App() {
   return (
-    <div className="App">
+    <div className="min-h-screen bg-gray-900">
       <Routes>
         <Route path="/" element={<EnvelopePage />} />
         <Route path="/envelopes" element={<EnvelopePage />} />
