@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", transactionController.get_transactions);
 
 // Get transactions by envelope ID
-router.get("/envelope/:envelopeId", transactionController.get_transaction_by_envelope);
+router.get("/:id", transactionController.get_transaction_by_envelope);
 
 // Create new transaction
 router.post("/", transactionController.create_transaction);

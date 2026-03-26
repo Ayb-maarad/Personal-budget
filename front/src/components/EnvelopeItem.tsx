@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { delete_envelope, update_envelope } from "../services/envelopeService";
+import { delete_envelope } from "../services/envelopeService";
 import UpdateEnvelopeForm from "./UpdateEnvelopeFrom";
 import Modal from "./Modal";
 

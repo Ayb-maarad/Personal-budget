@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { get_envelopes } from "../services/envelopeService";
-
+import { get_transactions } from "../services/transactionService";
 import CreateEnvelopeForm from "./CreateEnvelopeForm";
 import EnvelopeItem from "./EnvelopeItem";
 import TransactionForm from "./TransactionForm";
+import Transactionlogs from "./Transactionlogs";
 
+type TransactionType = {
 
+    id : number;
+    date : Date;
+    envelopeId : number;
+    budget : number;
+}
 type EnvelopeType = {
 
   id : number;
@@ -17,6 +24,7 @@ const Envelope = () => {
    
   
     const [envelopes, setEnvelopes] = useState<EnvelopeType[]>([]);
+      const [Transactions, setTransactions] = useState<TransactionType[]>([]);
 
 
       const fetch_envelopes = async (): Promise<void> => {
@@ -29,12 +37,26 @@ const Envelope = () => {
                 }
             };
 
+    const fetchTransactions = async () => {
+    try {
+
+        const res  = await get_transactions();
+        setTransactions(res.transactions)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 
        
 
             
     useEffect(() => {
         fetch_envelopes();
+    }, []);
+
+    useEffect(() => {
+        fetchTransactions();
     }, []);
    
 
@@ -73,6 +95,10 @@ const Envelope = () => {
 
             <section>
               <CreateEnvelopeForm onSuccess={fetch_envelopes} />
+            </section>
+
+            <section className="fixed left-0 top-39 h-screen w-67 text-white p-3">
+              <Transactionlogs envelopes ={envelopes} transactions={Transactions}/>
             </section>
             
           </div>

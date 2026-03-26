@@ -20,6 +20,8 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
 
     const [TransactionTitle, setTransactionTitle] = useState<string>("");
     const [TransactionBudget, setTransactionBudget] = useState<string>("");
+   
+   
 
     const handleTransaction = async (): Promise<void> => {
         try {
@@ -30,7 +32,7 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
 
             console.log(response);
             setTransactionBudget("");
-
+         
             onSuccess();
         } catch (error) {
             console.log(error);
@@ -74,6 +76,8 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
                     Buy
                 </button>
             </form>
+
+      
         </div>
     );
 

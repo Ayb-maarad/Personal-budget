@@ -22,7 +22,7 @@ const getTransactionById = async (id) => {
 
 const getAllTransactionByEnvelope = async (id) => {
 
-    const transactions = await Transaction.findAll({ where: { envelope_id: id } });
+    const transactions = await Transaction.findAll({ where: { envelopeId: id } });
 
     return transactions;
 

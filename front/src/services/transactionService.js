@@ -11,3 +11,15 @@ export const post_transaction = async (data)=>{
 
     return res.data ;
 }
+
+export const get_transactions =async () => {
+  const res = await api.get("/transactions");
+  return res.data;
+}
+
+export const get_transactions_by_envelope = async (id) => {
+  const res = await api.get(`/transactions/${id}`);
+  return res.data;
+
+  
+}
