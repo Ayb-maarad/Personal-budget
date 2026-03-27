@@ -70,7 +70,7 @@ exports.create_transaction = async (req,res) =>{
         res.status(201).json({ transaction , envelope : updated_envelope});
         
     } catch (error) {
-         res.status(500).json({ error: error.message });
+         res.status(400).json({ error: error.message });
          console.log(error);
     }   
 }

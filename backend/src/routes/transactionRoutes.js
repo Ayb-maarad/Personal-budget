@@ -13,7 +13,7 @@ router.get("/:id", transactionController.get_transaction_by_envelope);
 router.post("/", transactionController.create_transaction);
 
 // Get single transaction by ID
-router.get("/:id", transactionController.get_transaction);
+router.get("/transaction/:id", transactionController.get_transaction);
 
 // // Transfer between envelopes
 // router.post("/transfer", transactionController.transfer_between_envelopes);

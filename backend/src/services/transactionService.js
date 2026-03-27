@@ -46,6 +46,10 @@ const create_transaction = async (data) => {
 
     const updated_envelope_budget = envelope.budget - budget;
 
+    if(updated_envelope_budget <= 0){
+        throw new Error("You have no suffiscient money for this operation");
+    }
+
     const updated_envelope = await envelopeService.updateEnvelope(envelope.id, { title: envelope.title, budget: updated_envelope_budget });
 
     const transaction = await Transaction.create({ envelopeId: envelope.id, budget });

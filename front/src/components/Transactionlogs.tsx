@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 
 
@@ -27,14 +27,15 @@ type Transactionlogsprops = {
 
 const Transactionlogs = ({envelopes, transactions}: Transactionlogsprops)=>{
 
+ 
   return (
-    <div className="bg-gray-800 rounded-2xl p-5 shadow-lg">
-      <h2 className="text-green-400 text-xs font-bold uppercase tracking-widest mb-4">
+    <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
+      <h2 className="text-primary text-xs font-bold uppercase tracking-widest mb-4 border-b border-border pb-3">
         Transaction Logs
       </h2>
 
       {transactions.length === 0 ? (
-        <p className="text-gray-500 text-sm text-center py-4">No transactions yet.</p>
+        <p className="text-muted-foreground text-sm text-center py-4">No transactions yet.</p>
       ) : (
         <ul className="space-y-2 max-h-64 overflow-y-auto pr-1">
           {transactions.map((transaction) => {
@@ -42,21 +43,22 @@ const Transactionlogs = ({envelopes, transactions}: Transactionlogsprops)=>{
             return (
               <li
                 key={transaction.id}
-                className="flex items-center justify-between bg-gray-700 rounded-xl px-4 py-2 text-sm"
+                className="flex items-center justify-between bg-muted rounded-xl px-4 py-2 text-sm"
               >
                 <div className="flex flex-col">
-                  <span className="text-white font-medium">{envelope?.title ?? "Unknown"}</span>
-                  <span className="text-gray-400 text-xs">
+                  <span className="text-foreground font-medium">{envelope?.title ?? "Unknown"}</span>
+                  <span className="text-muted-foreground text-xs">
                     {new Date(transaction.date).toLocaleDateString("en-GB")}{" "}
                     {new Date(transaction.date).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}
                   </span>
                 </div>
-                <span className="text-red-400 font-bold">-${transaction.budget}</span>
+                <span className="text-destructive font-bold">-${transaction.budget}</span>
               </li>
             );
           })}
         </ul>
       )}
+  
     </div>
   );
 }

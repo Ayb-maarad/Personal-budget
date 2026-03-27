@@ -20,10 +20,12 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
 
     const [TransactionTitle, setTransactionTitle] = useState<string>("");
     const [TransactionBudget, setTransactionBudget] = useState<string>("");
+    const [err, setErr] = useState<string>("");
    
    
 
     const handleTransaction = async (): Promise<void> => {
+
         try {
             const response = await post_transaction({
                 title: TransactionTitle,
@@ -32,29 +34,31 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
 
             console.log(response);
             setTransactionBudget("");
-         
+            setErr("");
             onSuccess();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            const message = error.response?.data?.error ?? error.message;
+            setErr(message);
+            setTimeout(() => setErr(""), 4000);
         }
     };
 
 
 
-    const handleTransactionSubmit = async (): Promise<void> => {
-     
+    const handleTransactionSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
         await handleTransaction();
     };
 
 
     return (
-        <div className="max-w-xl mx-auto mb-8 bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700 ring-1 ring-indigo-500/10">
-            <h2 className="text-base font-bold text-indigo-400 uppercase tracking-widest mb-4 border-b border-gray-700 pb-2">New Transaction</h2>
+        <div className="bg-card rounded-2xl p-5 shadow-sm border border-border">
+            <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-4 border-b border-border pb-3">New Transaction</h2>
             <form onSubmit={handleTransactionSubmit} className="flex flex-col gap-3">
                 <select
                     value={TransactionTitle}
                     onChange={(e) => setTransactionTitle(e.target.value)}
-                    className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition-colors cursor-pointer"
+                    className="bg-background border border-input rounded-lg px-4 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-colors cursor-pointer"
                 >
                     <option value="">-- choose an envelope --</option>
                     {envelopes.map((envelope) => (
@@ -69,12 +73,13 @@ const TransactionForm = ({envelopes , onSuccess}: TransactionFormProps) => {
                     placeholder="Amount"
                     value={TransactionBudget}
                     onChange={(e) => setTransactionBudget(e.target.value)}
-                    className="bg-gray-900 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500"
+                    className="bg-background border border-input rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
                 />
 
-                <button type="submit" className="bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all text-white font-semibold rounded-lg py-2 shadow-md shadow-indigo-900/30">
+                <button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 transition-all font-semibold rounded-lg py-2">
                     Buy
                 </button>
+                {err && <p className="text-destructive text-sm mt-1">{err}</p>}
             </form>
 
       
