@@ -7,13 +7,13 @@ on:
     branches: ["main"]
 
 jobs:
-  # ── Backend: unit tests ───────────────────────────────────────────────────
-  test-backend:
-    name: Backend Tests
+  # ── Budget Service: unit tests ──────────────────────────────────────────
+  test-budget-service:
+    name: Budget Service Tests
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: budget-service
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: backend/package-lock.json
+          cache-dependency-path: budget-service/package-lock.json
 
       - name: Install dependencies
         run: npm ci
