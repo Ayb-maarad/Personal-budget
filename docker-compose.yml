@@ -8,6 +8,7 @@ services:
       POSTGRES_DB: budget
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
       - "5432:5432"
     healthcheck:
@@ -34,6 +35,26 @@ services:
       CORS_ORIGIN: http://localhost
     ports:
       - "5000:5000"
+
+  auth-service:
+    build: 
+      context: ./Auth-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: auth
+      DB_USER: postgres
+      DB_PASSWORD: root
+      PORT: 5001
+      CORS_ORIGIN: http://localhost
+      JWT_SECRET: 2167f25e1014cde2f6aa5d9f9dea8567f3d6c24f1cfb6485ea927b3e9f8656d7b00b3b700a61b65adfc20c20610568f960b38a6a13997d4f70617acfbe5368bb
+    ports:
+      - "5001:5001"
 
   frontend:
     build:
