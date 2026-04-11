@@ -1,7 +1,10 @@
 const express = require("express");
 const transactionController = require('../controllers/transactionController');
+const verifyToken = require('../middleware/verifyToken');
 
 const router = express.Router();
+
+router.use(verifyToken);
 
 // Get all transactions
 router.get("/", transactionController.get_transactions);

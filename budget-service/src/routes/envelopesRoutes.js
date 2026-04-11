@@ -1,10 +1,10 @@
 const express = require("express");
-
 const envelopesController = require('../controllers/envelopesController');
-
-
+const verifyToken = require('../middleware/verifyToken');
 
 const router = express.Router();
+
+router.use(verifyToken);
 
 
 
