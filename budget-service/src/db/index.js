@@ -49,7 +49,7 @@ async function connectDB() {
   await sequelize.authenticate();
   // Don't use sync() for a migrations-based project.
   await sequelize.sync();
-  console.log("✅ Database connected");
+  console.log("Database connected");
 }
 
 module.exports = {

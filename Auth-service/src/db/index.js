@@ -1,5 +1,4 @@
-const { Sequelize, DataTypes } = require("sequelize");
-
+﻿const { Sequelize, DataTypes } = require("sequelize");
 
 function buildSequelize() {
     const {
@@ -11,7 +10,6 @@ function buildSequelize() {
         DB_PASSWORD,
         NODE_ENV,
     } = process.env;
-
 
     const sequelize = DATABASE_URL
         ? new Sequelize(DATABASE_URL, {
@@ -36,11 +34,10 @@ const sequelize = buildSequelize();
 
 const User = require("./models/Users")(sequelize, DataTypes);
 
-
 async function connectDB() {
     await sequelize.authenticate();
     await sequelize.sync();
-    console.log("✅ Database connected");
+    console.log("Database connected");
 }
 
 module.exports = {

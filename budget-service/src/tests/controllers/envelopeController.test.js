@@ -35,6 +35,7 @@ describe("envelope controller", () => {
             params: {
                 id: 1,
             },
+            user: { id: 1 },
         };
 
         res = {
@@ -57,6 +58,7 @@ describe("envelope controller", () => {
             expect(envelopeService.createEnvelope).toHaveBeenCalledWith({
                 title: "food",
                 budget: 400,
+                userId: 1,
             });
             expect(res.status).toHaveBeenCalledWith(201);
             expect(res.json).toHaveBeenCalledWith({
@@ -107,7 +109,7 @@ describe("envelope controller", () => {
 
             await get_envelopes(req, res);
 
-            expect(envelopeService.getAllEnvelopes).toHaveBeenCalledTimes(1);
+            expect(envelopeService.getAllEnvelopes).toHaveBeenCalledWith(1);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
                 envelopes: [
@@ -137,7 +139,7 @@ describe("envelope controller", () => {
 
             await get_envelope(req, res);
 
-            expect(envelopeService.getEnvelopeById).toHaveBeenCalledWith(1);
+            expect(envelopeService.getEnvelopeById).toHaveBeenCalledWith(1, 1);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
                 envelope: { id: 1, title: "food", budget: 400 },
@@ -177,7 +179,7 @@ describe("envelope controller", () => {
             expect(envelopeService.updateEnvelope).toHaveBeenCalledWith(1, {
                 title: "food",
                 budget: 350,
-            });
+            }, 1);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
                 envelope: { id: 1, title: "food", budget: 350 },
@@ -222,7 +224,7 @@ describe("envelope controller", () => {
 
             await delete_envelope(req, res);
 
-            expect(envelopeService.deleteEnvelope).toHaveBeenCalledWith(1);
+            expect(envelopeService.deleteEnvelope).toHaveBeenCalledWith(1, 1);
             expect(res.status).toHaveBeenCalledWith(204);
             expect(res.send).toHaveBeenCalled();
         });

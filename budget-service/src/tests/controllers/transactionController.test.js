@@ -24,6 +24,7 @@ describe("transactionController", () => {
         req = {
             body: {},
             params: { id: 1 },
+            user: { id: 1 },
         };
 
         res = {
@@ -41,7 +42,7 @@ describe("transactionController", () => {
 
             await get_transactions(req, res);
 
-            expect(transactionService.getTransactions).toHaveBeenCalledTimes(1);
+            expect(transactionService.getTransactions).toHaveBeenCalledWith(1);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
                 transactions: [
@@ -148,10 +149,10 @@ describe("transactionController", () => {
 
             await create_transaction(req, res);
 
-            expect(transactionService.create_transaction).toHaveBeenCalledWith({
-                title: "food",
-                budget: 100,
-            });
+            expect(transactionService.create_transaction).toHaveBeenCalledWith(
+                { title: "food", budget: 100 },
+                1
+            );
             expect(res.status).toHaveBeenCalledWith(201);
             expect(res.json).toHaveBeenCalledWith({
                 transaction: mockResult.transaction,

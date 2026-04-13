@@ -6,7 +6,8 @@ exports.register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const user = await authService.register({ username, email, password });
-        res.status(201).json({ user });
+        const { password: _pw, ...safeUser } = user.toJSON();
+        res.status(201).json({ user: safeUser });
     } catch (error) {
         // Business logic errors (validation)
         if (error.message.includes('required') || error.message.includes('exists')) {
@@ -22,7 +23,8 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const token = await authService.login({ email, password });
-        res.status(200).json({ token });
+        res.cookie('token', token, { httpOnly: true, sameSite: 'strict', maxAge: 3600000 });
+        res.status(200).json({ message: 'Login successful' });
     }
 
     catch (error) {
@@ -33,4 +35,10 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: error.message });
         console.log(error);
     }
+};
+
+// Logout user
+exports.logout = (req, res) => {
+    res.clearCookie('token', { httpOnly: true, sameSite: 'strict' });
+    res.status(200).json({ message: 'Logged out successfully' });
 };
