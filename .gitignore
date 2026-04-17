@@ -1,41 +1,74 @@
-# Dependencies
+# ── Dependencies ─────────────────────────────────────────
 node_modules/
+**/node_modules/
 
-# Environment variables
+# ── Environment variables (secrets) ──────────────────────
 .env
 .env.local
-*.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+# Allow example/template files
+!.env.example
+!**/.env.example
 
-# Build outputs
+# ── Build outputs ─────────────────────────────────────────
 dist/
 dist-ssr/
 build/
+**/dist/
+**/build/
 
-# Test coverage
+# ── Test coverage ─────────────────────────────────────────
 coverage/
+**/coverage/
+*.lcov
+.nyc_output/
 
-# Logs
+# ── Logs ──────────────────────────────────────────────────
 logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
+lerna-debug.log*
 
-# Editor directories
+# ── Docker ────────────────────────────────────────────────
+# Keep compose files, ignore local override
+docker-compose.override.yml
+
+# ── Database ──────────────────────────────────────────────
+*.sqlite
+*.sqlite3
+*.db
+
+# ── Editor directories ────────────────────────────────────
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea/
+*.iml
 
-# OS files
+# ── OS files ─────────────────────────────────────────────
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Misc
+# ── TypeScript ────────────────────────────────────────────
+*.tsbuildinfo
+
+# ── Misc VS / JetBrains artifacts ────────────────────────
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-enterprise-infrastructure-monitor.tsx
 
+# ── Project-specific ─────────────────────────────────────
 tasks.txt
+start.ps1
+enterprise-infrastructure-monitor.tsx

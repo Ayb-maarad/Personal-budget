@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { get_envelopes } from "../services/envelopeService";
 import { get_transactions } from "../services/transactionService";
+import { logout } from "../services/authService";
 import CreateEnvelopeForm from "../components/CreateEnvelopeForm";
 import EnvelopeItem from "../components/EnvelopeItem";
 import TransactionForm from "../components/TransactionForm";
@@ -21,8 +23,14 @@ type EnvelopeType = {
 
 const EnvelopePage = () => {
 
+    const navigate = useNavigate();
     const [envelopes, setEnvelopes] = useState<EnvelopeType[]>([]);
     const [transactions, setTransactions] = useState<TransactionType[]>([]);
+
+    const handleLogout = async () => {
+        await logout();
+        navigate("/login");
+    };
 
     const fetch_envelopes_and_transactions = async (): Promise<void> => {
         try {
@@ -49,6 +57,12 @@ const EnvelopePage = () => {
                         </h1>
                         <p className="text-muted-foreground mt-1 text-xs tracking-widest uppercase">Manage your budget with envelopes</p>
                     </div>
+                    <button
+                        onClick={handleLogout}
+                        className="text-sm text-red-500 hover:text-red-700 border border-red-300 hover:border-red-500 px-4 py-1.5 rounded-lg transition-colors"
+                    >
+                        Disconnect
+                    </button>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                     <section className="lg:col-span-2">

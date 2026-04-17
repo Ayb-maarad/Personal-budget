@@ -12,12 +12,12 @@ const Modal = ({ onClose, children }: ModalProps) => {
       onClick={onClose}
     >
       <div
-        className="bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-gray-600 ring-1 ring-indigo-500/20"
+        className="bg-card rounded-2xl p-6 w-full max-w-md shadow-2xl border border-border"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
         <div className="flex justify-end mb-4">
           <button
-            className="text-gray-500 hover:text-white hover:bg-gray-700 rounded-lg p-1.5 transition-colors text-sm"
+            className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg p-1.5 transition-colors text-sm"
             onClick={onClose}
           >
             ✕

@@ -46,24 +46,24 @@ const UpdateEnvelopeForm = ({envelope, onClose}: UpdateEnvelopeFormprops)=>{
 
     return (
         <form onSubmit={handleUpdateEnvelope} className="flex flex-col gap-4">
-            <h3 className="text-lg font-semibold text-white tracking-wide">Update Envelope</h3>
+            <h3 className="text-lg font-semibold text-foreground tracking-wide">Update Envelope</h3>
 
             <div className="flex flex-col gap-1">
-                <label className="text-sm text-gray-400">Title</label>
+                <label className="text-sm text-muted-foreground">Title</label>
                 <input
                     value={EnvelopeTitle}
                     onChange={(e) => setEnvelopeTitle(e.target.value)}
-                    className="bg-gray-700 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="bg-background text-foreground rounded-lg px-4 py-2 border border-input focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
                     placeholder="Envelope title"
                 />
             </div>
 
             <div className="flex flex-col gap-1">
-                <label className="text-sm text-gray-400">Budget</label>
+                <label className="text-sm text-muted-foreground">Budget</label>
                 <input
                     value={EnvelopeBudget}
                     onChange={(e) => setEnvelopeBudget(Number(e.target.value))}
-                    className="bg-gray-700 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="bg-background text-foreground rounded-lg px-4 py-2 border border-input focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
                     placeholder="Budget amount"
                     type="number"
                 />
@@ -71,7 +71,7 @@ const UpdateEnvelopeForm = ({envelope, onClose}: UpdateEnvelopeFormprops)=>{
 
             <button
                 type="submit"
-                className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded-lg transition-colors"
+                className="mt-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2 rounded-lg transition-colors"
             >
                 Save Changes
             </button>

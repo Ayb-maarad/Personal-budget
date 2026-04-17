@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
 
     catch (error) {
         // Business logic errors (validation)
-        if (error.message.includes('Invalid')) {
+        if (error.message.includes('Invalid')) {x 
             return res.status(401).json({ error: error.message });
         }
         res.status(500).json({ error: error.message });
@@ -41,4 +41,10 @@ exports.login = async (req, res) => {
 exports.logout = (req, res) => {
     res.clearCookie('token', { httpOnly: true, sameSite: 'strict' });
     res.status(200).json({ message: 'Logged out successfully' });
+};
+
+// Get current authenticated user
+exports.me = (req, res) => {
+    // req.user is set by verifyToken middleware
+    res.status(200).json({ user: req.user });
 };

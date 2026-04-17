@@ -1,4 +1,6 @@
-﻿const { Sequelize, DataTypes } = require("sequelize");
+﻿const path = require("path");
+const { Sequelize, DataTypes } = require("sequelize");
+const { Umzug, SequelizeStorage } = require("umzug");
 
 function buildSequelize() {
     const {
@@ -34,15 +36,32 @@ const sequelize = buildSequelize();
 
 const User = require("./models/Users")(sequelize, DataTypes);
 
+const umzug = new Umzug({
+    migrations: {
+        glob: path.join(__dirname, "migrations/*.js"),
+        resolve: ({ name, path: migPath, context }) => {
+            const migration = require(migPath);
+            return {
+                name,
+                up: async () => migration.up(context, Sequelize),
+                down: async () => migration.down(context, Sequelize),
+            };
+        },
+    },
+    context: sequelize.getQueryInterface(),
+    storage: new SequelizeStorage({ sequelize }),
+    logger: console,
+});
+
 async function connectDB() {
     await sequelize.authenticate();
-    await sequelize.sync();
-    console.log("Database connected");
+    await umzug.up();  // runs all pending migrations
+    console.log("Database connected and migrations applied");
 }
 
 module.exports = {
     sequelize,
     DataTypes,
     connectDB,
-    User
+    User,
 };

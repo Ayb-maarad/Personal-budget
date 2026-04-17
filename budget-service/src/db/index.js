@@ -1,7 +1,7 @@
 // src/db/index.js
+const path = require("path");
 const { Sequelize, DataTypes } = require("sequelize");
-
-
+const { Umzug, SequelizeStorage } = require("umzug");
 
 function buildSequelize() {
   const {
@@ -37,19 +37,34 @@ function buildSequelize() {
 
 const sequelize = buildSequelize();
 
-
 const Envelope = require("./models/Envelope")(sequelize, DataTypes);
- const Transaction = require("./models/Transaction")(sequelize, DataTypes);
+const Transaction = require("./models/Transaction")(sequelize, DataTypes);
 
 // ---- Associations ----
- Envelope.hasMany(Transaction, { foreignKey: "envelopeId", onDelete: "CASCADE" });
- Transaction.belongsTo(Envelope, { foreignKey: "envelopeId" });
+Envelope.hasMany(Transaction, { foreignKey: "envelopeId", onDelete: "CASCADE" });
+Transaction.belongsTo(Envelope, { foreignKey: "envelopeId" });
+
+const umzug = new Umzug({
+  migrations: {
+    glob: path.join(__dirname, "migrations/*.js"),
+    resolve: ({ name, path: migPath, context }) => {
+      const migration = require(migPath);
+      return {
+        name,
+        up: async () => migration.up(context, Sequelize),
+        down: async () => migration.down(context, Sequelize),
+      };
+    },
+  },
+  context: sequelize.getQueryInterface(),
+  storage: new SequelizeStorage({ sequelize }),
+  logger: console,
+});
 
 async function connectDB() {
   await sequelize.authenticate();
-  // Don't use sync() for a migrations-based project.
-  await sequelize.sync();
-  console.log("Database connected");
+  await umzug.up();  // runs all pending migrations
+  console.log("Database connected and migrations applied");
 }
 
 module.exports = {

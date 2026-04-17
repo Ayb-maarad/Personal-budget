@@ -1,0 +1,42 @@
+# Development overrides — use with: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+services:
+  budget-service:
+    ports:
+      - "5000:5000"   # exposed for direct dev access / curl debugging
+    volumes:
+      - ./budget-service:/app
+      - /app/node_modules
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/budget
+      CORS_ORIGIN: http://localhost
+
+  auth-service:
+    ports:
+      - "5001:5001"   # exposed for direct dev access / curl debugging
+    volumes:
+      - ./Auth-service:/app
+      - /app/node_modules
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/auth
+      CORS_ORIGIN: http://localhost
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"   # exposed for direct Vite access if needed
+
+  # Override gateway to proxy Vite dev server (port 5173) with WebSocket/HMR support
+  gateway:
+    volumes:
+      - ./nginx/gateway.dev.conf:/etc/nginx/conf.d/default.conf:ro
